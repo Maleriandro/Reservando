@@ -21,7 +21,7 @@ Listado.prototype.buscarRestaurante = function(id) {
     var restauranteBuscado = this.restaurantes.find(restaurant => {
         return restaurant.id === id;
     });
-    debugger;
+    
     if (restauranteBuscado === undefined) {
         return "No se ha encontrado ningún restaurant";
     } else {
@@ -51,6 +51,7 @@ Listado.prototype.obtenerRubros = function() {
     });
 
     var rubros = this.eliminarRepetidos(rubrosProvisorio)
+    // debugger;
 
     return rubros.sort();
 }
@@ -62,7 +63,7 @@ Listado.prototype.obtenerHorarios = function() {
     //En este array se van a cargar los arrays de horarios, que luego vamos convertir en un solo array
     //Recorremos el array de restaurantes y vamos agregando todos los array de horarios
     var arrayDeHorarios = this.restaurantes.map(restaurante => {
-        return this.restaurantes.horarios;
+        return restaurante.horarios;
     });
    
     //En este arreglo vamos a poner todos los horarios, uno por uno
@@ -80,9 +81,10 @@ Listado.prototype.obtenerHorarios = function() {
 }
 
 Listado.prototype.eliminarRepetidos = function(arrayProvisorio) {
-    arrayProvisorio.filter(function(elem, index, self) {
+    var arrayFiltrado = arrayProvisorio.filter(function(elem, index, self) {
         return index === self.indexOf(elem);
     });
+    return arrayFiltrado;
 }
 
 //Función que recibe los filtros que llegan desde el HTML y filtra el arreglo de restaurantes.
