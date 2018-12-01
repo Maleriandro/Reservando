@@ -141,3 +141,18 @@ describe('Funcionamiento de obtenerRestaurantes()', function() {
         expect(filtrados).to.be.eql(listado.restaurantes);
     });
 });
+
+describe('Funcionamiento de reservas', function() {
+    var reserva1 = new Reserva (new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+    var reserva2 = new Reserva (new Date(2018, 7, 27, 14, 100), 2, 150, "DES200");
+    
+    it('Buen funcionamiento de calcularPrecioBase()', function() {
+        expect(reserva1.calcularPrecioBase()).to.be.eql(2800);
+        expect(reserva2.calcularPrecioBase()).to.be.eql(300);
+    });
+
+    it('Buen funcionamiento de calcularPrecioFinal()', function() {
+        expect(reserva1.calcularPrecioFinal()).to.be.eql(2310);
+        expect(reserva2.calcularPrecioFinal()).to.be.eql(100);
+    })
+});
