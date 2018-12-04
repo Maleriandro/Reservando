@@ -143,16 +143,26 @@ describe('Funcionamiento de obtenerRestaurantes()', function() {
 });
 
 describe('Funcionamiento de reservas', function() {
-    var reserva1 = new Reserva (new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
-    var reserva2 = new Reserva (new Date(2018, 7, 27, 14, 100), 2, 150, "DES200");
+    var reserva1 = new Reserva (new Date(2018, 7, 22, 11, 00), 8, 350, "DES1");
+    var reserva2 = new Reserva (new Date(2018, 7, 27, 13, 30), 2, 150, "DES200");
     
     it('Buen funcionamiento de calcularPrecioBase()', function() {
         expect(reserva1.calcularPrecioBase()).to.be.eql(2800);
         expect(reserva2.calcularPrecioBase()).to.be.eql(300);
     });
 
+    it('Buen funcionamiento de calcularDescuentos()', function() {
+        expect(reserva1.calcularDescuentos()).to.be.eql(630);
+        expect(reserva2.calcularDescuentos()).to.be.eql(200);
+    });
+
+    it('Buen funcionamiento de calcularAdicionales()', function() {
+        expect(reserva1.calcularAdicionales()).to.be.eql(10);
+        expect(reserva2.calcularAdicionales()).to.be.eql(5);
+    })
+
     it('Buen funcionamiento de calcularPrecioFinal()', function() {
         expect(reserva1.calcularPrecioFinal()).to.be.eql(2310);
         expect(reserva2.calcularPrecioFinal()).to.be.eql(100);
-    })
+    });
 });
