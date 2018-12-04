@@ -14,13 +14,14 @@ Reserva.prototype.calcularPrecioBase = function calcularPrecioBaseFn() {
 Reserva.prototype.calcularPrecioFinal = function calcularPrecioFinalFn() {
     let precioFinal = this.calcularPrecioBase();
 
-
+    precioFinal += this.calcularAdicionales();
+    precioFinal -= this.calcularDescuentos();
 
     return precioFinal;
 }
 
 Reserva.prototype.calcularDescuentos = function calcularDescuentosFn() {
-    let descuentos = this.calcularDescuentosPorCodigo() + this.calcularDescuentosPorPersonas();
+    const descuentos = this.calcularDescuentosPorCodigo() + this.calcularDescuentosPorPersonas();
 
     return descuentos;
 }
@@ -67,18 +68,20 @@ Reserva.prototype.calcularDescuentosPorCodigo = function calcularDescuentosCodig
 }
 
 Reserva.prototype.calcularAdicionales = function calcularAdicionalesFn() {
+    const adicionales = this.calcularAdicionalPorDia() + this.calcularAdicionalPorHorario();
 
+    return adicionales;
 }
 
 Reserva.prototype.calcularAdicionalPorHorario = function calcularAdicionalPorHorarioFn() {
     let horaDeReserva = this.horario.getHours();
     let adicionalPorcentual = 0;
 
-    if ((12 < horaDeReserva < 15) || (19 < horaDeReserva < 22)) {
+    if (horaDeReserva === 13 || horaDeReserva === 14 || horaDeReserva === 20 || horaDeReserva === 21) {
         adicionalPorcentual = 5;
     }
 
-    const adicional = precioBase() / 100 * adicionalPorcentual;
+    const adicional = this.calcularPrecioBase() / 100 * adicionalPorcentual;
 
     return adicional;
 }
@@ -88,6 +91,10 @@ Reserva.prototype.calcularAdicionalPorDia = function calcularAdicionalPorDiaFn()
     let adicionalPorcentual = 0;
 
     if (diaDeReserva == 0 || diaDeReserva == 5 || diaDeReserva == 6) {
-        //Calcular Porcentualsdfkjhadasdhfdjlsdsljfljhk
+        adicionalPorcentual = 10;
     }
+
+    const adicional = this.calcularPrecioBase() / 100 * adicionalPorcentual;
+
+    return adicional;
 }

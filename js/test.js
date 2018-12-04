@@ -58,6 +58,12 @@ describe('Funcionamiento de obtenerPuntuacion()', function() {
         var puntaje = restaurant.obtenerPuntuacion();
         expect(puntaje).to.eql(7.4);
     });
+
+    it('Cuando no tiene calificaciones, la puntuacion es 0', function() {
+        restaurant = new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", []);
+        var puntaje = restaurant.obtenerPuntuacion();
+        expect(puntaje).to.eql(0);
+    });
     
 });
 
@@ -143,7 +149,7 @@ describe('Funcionamiento de obtenerRestaurantes()', function() {
 });
 
 describe('Funcionamiento de reservas', function() {
-    var reserva1 = new Reserva (new Date(2018, 7, 22, 11, 00), 8, 350, "DES1");
+    var reserva1 = new Reserva (new Date(2018, 7, 25, 11, 00), 8, 350, "DES1");
     var reserva2 = new Reserva (new Date(2018, 7, 27, 13, 30), 2, 150, "DES200");
     
     it('Buen funcionamiento de calcularPrecioBase()', function() {
@@ -157,12 +163,13 @@ describe('Funcionamiento de reservas', function() {
     });
 
     it('Buen funcionamiento de calcularAdicionales()', function() {
-        expect(reserva1.calcularAdicionales()).to.be.eql(10);
-        expect(reserva2.calcularAdicionales()).to.be.eql(5);
+        debugger;
+        expect(reserva1.calcularAdicionales()).to.be.eql(280); //280 expected
+        expect(reserva2.calcularAdicionales()).to.be.eql(15);
     })
 
     it('Buen funcionamiento de calcularPrecioFinal()', function() {
-        expect(reserva1.calcularPrecioFinal()).to.be.eql(2310);
-        expect(reserva2.calcularPrecioFinal()).to.be.eql(100);
+        expect(reserva1.calcularPrecioFinal()).to.be.eql(2450);
+        expect(reserva2.calcularPrecioFinal()).to.be.eql(115);
     });
 });
