@@ -1,0 +1,100 @@
+const Reserva = function(horario, cantidadDePersonas, precioPorPersona, codigoDeDescuento) {
+    this.horario = horario //objeto de tipo Date que va a representa la fecha y la hora de la reserva.
+    this.cantidadDePersonas = cantidadDePersonas //un número entero.
+    this.precioPorPersona = precioPorPersona //un número entero.
+    this.codigoDeDescuento = codigoDeDescuento //un string.
+}
+
+Reserva.prototype.calcularPrecioBase = function calcularPrecioBaseFn() {
+    const precioBase = this.cantidadDePersonas * this.precioPorPersona;
+
+    return precioBase;
+}
+
+Reserva.prototype.calcularPrecioFinal = function calcularPrecioFinalFn() {
+    let precioFinal = this.calcularPrecioBase();
+
+    precioFinal += this.calcularAdicionales();
+    precioFinal -= this.calcularDescuentos();
+
+    return precioFinal;
+}
+
+Reserva.prototype.calcularDescuentos = function calcularDescuentosFn() {
+    const descuentos = this.calcularDescuentosPorCodigo() + this.calcularDescuentosPorPersonas();
+
+    return descuentos;
+}
+
+Reserva.prototype.calcularDescuentosPorPersonas = function calcularDescuentosPorPersonasFn() { 
+    let descuentoPorcentual;
+    
+    if (this.cantidadDePersonas < 4) {
+        descuentoPorcentual = 0; //no hay nada de descuento
+    } else if (this.cantidadDePersonas <= 6) {
+        descuentoPorcentual = 5; //Descuento del 5%
+    } else if (this.cantidadDePersonas <= 8) {
+        descuentoPorcentual = 10; //Descuento del 10%
+    } else if (this.cantidadDePersonas > 8) {
+        descuentoPorcentual = 15; //Descuento del 15%
+    }
+
+    let descuento = this.calcularPrecioBase() / 100 * descuentoPorcentual;
+
+    return descuento;
+    
+}
+
+Reserva.prototype.calcularDescuentosPorCodigo = function calcularDescuentosCodigoFn() {
+    let descuento = 0;
+    
+    switch (this.codigoDeDescuento) {
+        case 'DES15': //Calcular 15% de descuento
+            descuento = this.calcularPrecioBase() / 100 * 15;
+            break;
+
+        case 'DES200': //descuento $200
+            descuento = 200;
+            break;
+            
+        case 'DES1': //Descuento del precio por persona
+            descuento = this.precioPorPersona;
+
+        default:
+            break;
+    }
+
+    return descuento;
+}
+
+Reserva.prototype.calcularAdicionales = function calcularAdicionalesFn() {
+    const adicionales = this.calcularAdicionalPorDia() + this.calcularAdicionalPorHorario();
+
+    return adicionales;
+}
+
+Reserva.prototype.calcularAdicionalPorHorario = function calcularAdicionalPorHorarioFn() {
+    let horaDeReserva = this.horario.getHours();
+    let adicionalPorcentual = 0;
+
+    if (horaDeReserva === 13 || horaDeReserva === 14 || horaDeReserva === 20 || horaDeReserva === 21) {
+        adicionalPorcentual = 5;
+    }
+
+    const adicional = this.calcularPrecioBase() / 100 * adicionalPorcentual;
+
+    return adicional;
+}
+
+Reserva.prototype.calcularAdicionalPorDia = function calcularAdicionalPorDiaFn() {
+    let diaDeReserva = this.horario.getDay();
+    let adicionalPorcentual = 0;
+
+    if (diaDeReserva == 0 || diaDeReserva == 5 || diaDeReserva == 6) {
+        adicionalPorcentual = 10;
+    }
+
+    const adicional = this.calcularPrecioBase() / 100 * adicionalPorcentual;
+
+    return adicional;
+}
