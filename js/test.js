@@ -149,7 +149,7 @@ describe('Funcionamiento de obtenerRestaurantes()', function() {
 });
 
 describe('Funcionamiento de reservas', function() {
-    var reserva1 = new Reserva (new Date(2018, 7, 25, 11, 00), 8, 350, "DES1");
+    var reserva1 = new Reserva (new Date(2018, 7, 25, 11, 0), 8, 350, "DES1");
     var reserva2 = new Reserva (new Date(2018, 7, 27, 13, 30), 2, 150, "DES200");
     
     it('Buen funcionamiento de calcularPrecioBase()', function() {
@@ -163,7 +163,6 @@ describe('Funcionamiento de reservas', function() {
     });
 
     it('Buen funcionamiento de calcularAdicionales()', function() {
-        debugger;
         expect(reserva1.calcularAdicionales()).to.be.eql(280); //280 expected
         expect(reserva2.calcularAdicionales()).to.be.eql(15);
     })
